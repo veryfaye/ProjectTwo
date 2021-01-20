@@ -35,8 +35,17 @@ module.exports = function(app) {
       order: [["score", "DESC"]],
       include: [db.User]
     }).then(dbScore => {
-      console.log(dbScore);
       res.render("startGame", { Score: dbScore.map(score => score.toJSON()) });
+    });
+  });
+
+  app.get("/endGame", (req, res) => {
+    db.Score.findAll({
+      limit: 10,
+      order: [["score", "DESC"]],
+      include: [db.User]
+    }).then(dbScore => {
+      res.render("endGame", { Score: dbScore.map(score => score.toJSON()) });
     });
   });
 };
