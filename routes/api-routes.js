@@ -18,7 +18,6 @@ module.exports = function(app) {
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
   app.post("/api/signup", (req, res) => {
-    console.log(req.body);
     db.User.create({
       email: req.body.email,
       password: req.body.password,
@@ -54,15 +53,25 @@ module.exports = function(app) {
     }
   });
 
-  // JSON Data for the top ten scores
-  app.get("/api/TopScores", (req, res) => {
-    db.Score.findAll({
-      limit: 10,
-      order: [["score", "DESC"]],
-      include: [db.User]
-    }).then(dbScore => {
-      console.log(dbScore);
-      res.json(dbScore);
-    });
+  app.post("/api/newscore", (req, res) => {
+    console.log(req.body);
+    db.Score.create({
+      score: req.body.score
+    })
+      .then(() => {
+        res.redirect(307, "/api/login");
+      })
+      .catch(err => {
+        res.status(401).json(err);
+      });
+  });
+
+  //Route for updating the highScore using the users login
+  app.put("/api/highscore/:id", (req, res) => {
+    db.User.update(req.highScore, { where: { id: req.params.id } }).then(
+      dbUser => {
+        res.json(dbUser);
+      }
+    );
   });
 };
