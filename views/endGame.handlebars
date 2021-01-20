@@ -1,0 +1,13 @@
+{{!-- Table of high scores --}}
+<h1>High Scores</h1>
+<ul>
+    {{#each Score}}
+    <li>{{this.score}} {{this.User.firstName}}</li>
+    {{/each}}
+</ul>
+
+{{!-- start game button --}}
+<button>Start the Game!</button>
+
+{{!-- log out button --}}
+<button>Log Out</button>

@@ -50,4 +50,16 @@ module.exports = function(app) {
       });
     }
   });
+
+  // JSON Data for the top ten scores
+  app.get("/api/TopScores", (req, res) => {
+    db.Score.findAll({
+      limit: 10,
+      order: [["score", "DESC"]],
+      include: [db.User]
+    }).then(dbScore => {
+      console.log(dbScore);
+      res.json(dbScore);
+    });
+  });
 };
