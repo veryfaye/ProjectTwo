@@ -56,7 +56,8 @@ module.exports = function(app) {
   app.post("/api/newscore", (req, res) => {
     console.log(req.body);
     db.Score.create({
-      score: req.body.score
+      score: req.body.score,
+      UserId: req.body.UserId
     })
       .then(() => {
         res.redirect(307, "/api/login");
@@ -67,11 +68,14 @@ module.exports = function(app) {
   });
 
   //Route for updating the highScore using the users login
-  app.put("/api/highscore/:id", (req, res) => {
-    db.User.update(req.highScore, { where: { id: req.params.id } }).then(
-      dbUser => {
-        res.json(dbUser);
-      }
-    );
+  app.put("/api/highscore", (req, res) => {
+    console.log(req.body);
+    console.log(req.body);
+    db.User.update(
+      { highScore: req.body.highScore },
+      { where: { id: req.body.id } }
+    ).then(dbUser => {
+      res.json(dbUser);
+    });
   });
 };

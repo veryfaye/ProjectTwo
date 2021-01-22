@@ -48,7 +48,7 @@ $(document).ready(() => {
       lastName: lastName
     })
       .then(() => {
-        window.location.replace("/endGame");
+        window.location.replace("/game");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
       .catch(handleLoginErr);

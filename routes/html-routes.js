@@ -29,13 +29,13 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/members.html"));
   });
 
-  app.get("/startGame", (req, res) => {
+  app.get("/game", (req, res) => {
     db.Score.findAll({
       limit: 10,
       order: [["score", "DESC"]],
       include: [db.User]
     }).then(dbScore => {
-      res.render("startGame", { Score: dbScore.map(score => score.toJSON()) });
+      res.render("game", { Score: dbScore.map(score => score.toJSON()) });
     });
   });
 
