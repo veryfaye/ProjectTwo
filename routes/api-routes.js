@@ -1,6 +1,9 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
+//nodemailer items
+require("dotenv").config();
+const nodemailer = require("nodemailer");
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -26,6 +29,30 @@ module.exports = function(app) {
     })
       .then(() => {
         res.redirect(307, "/api/login");
+        //nodemailer step1
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.EMAIL_EMAIL,
+            pass: process.env.EMAIL_PASS
+          }
+        });
+        //step2
+        const mailOptions = {
+          from: "space.invaders404@gmail.com",
+          to: req.body.email,
+          subject: "Welcome to Space Invaders",
+          text: "You are now signed up with Space Invaders! Have fun!"
+        };
+
+        //step 3
+        transporter.sendMail(mailOptions, err => {
+          if (err) {
+            console.log("Error has occured");
+          } else {
+            console.log("Email Sent");
+          }
+        });
       })
       .catch(err => {
         res.status(401).json(err);
@@ -48,7 +75,10 @@ module.exports = function(app) {
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
-        id: req.user.id
+        id: req.user.id,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        highScore: req.user.highScore
       });
     }
   });

@@ -10,7 +10,7 @@ module.exports = function(app) {
   app.get("/", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
-      res.redirect("/members");
+      res.redirect("/game");
     }
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
@@ -18,7 +18,7 @@ module.exports = function(app) {
   app.get("/login", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
-      res.redirect("/members");
+      res.redirect("/game");
     }
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
@@ -29,7 +29,7 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/members.html"));
   });
 
-  app.get("/game", (req, res) => {
+  app.get("/game", isAuthenticated, (req, res) => {
     db.Score.findAll({
       limit: 10,
       order: [["score", "DESC"]],
@@ -39,13 +39,13 @@ module.exports = function(app) {
     });
   });
 
-  app.get("/endGame", (req, res) => {
+  app.get("/game", (req, res) => {
     db.Score.findAll({
       limit: 10,
       order: [["score", "DESC"]],
       include: [db.User]
     }).then(dbScore => {
-      res.render("endGame", { Score: dbScore.map(score => score.toJSON()) });
+      res.render("game", { Score: dbScore.map(score => score.toJSON()) });
     });
   });
 };
