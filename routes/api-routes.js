@@ -20,7 +20,9 @@ module.exports = function(app) {
   app.post("/api/signup", (req, res) => {
     db.User.create({
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
     })
       .then(() => {
         res.redirect(307, "/api/login");
@@ -51,15 +53,29 @@ module.exports = function(app) {
     }
   });
 
-  // JSON Data for the top ten scores
-  app.get("/api/TopScores", (req, res) => {
-    db.Score.findAll({
-      limit: 10,
-      order: [["score", "DESC"]],
-      include: [db.User]
-    }).then(dbScore => {
-      console.log(dbScore);
-      res.json(dbScore);
+  app.post("/api/newscore", (req, res) => {
+    console.log(req.body);
+    db.Score.create({
+      score: req.body.score,
+      UserId: req.body.UserId
+    })
+      .then(() => {
+        res.redirect(307, "/api/login");
+      })
+      .catch(err => {
+        res.status(401).json(err);
+      });
+  });
+
+  //Route for updating the highScore using the users login
+  app.put("/api/highscore", (req, res) => {
+    console.log(req.body);
+    console.log(req.body);
+    db.User.update(
+      { highScore: req.body.highScore },
+      { where: { id: req.body.id } }
+    ).then(dbUser => {
+      res.json(dbUser);
     });
   });
 };

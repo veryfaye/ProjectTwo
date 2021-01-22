@@ -8,6 +8,7 @@ $(document).ready(() => {
 
   // When the signup button is clicked, we validate the email and password are not blank
   signUpForm.on("submit", event => {
+    console.log("submitted!");
     event.preventDefault();
     const userData = {
       email: emailInput.val().trim(),
@@ -47,7 +48,7 @@ $(document).ready(() => {
       lastName: lastName
     })
       .then(() => {
-        window.location.replace("/members");
+        window.location.replace("/game");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
       .catch(handleLoginErr);
