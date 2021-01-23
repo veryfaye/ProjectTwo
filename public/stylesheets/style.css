@@ -7,7 +7,8 @@ form.game {
 
 body {
   background-color: #000000;
-  color: #bfff00;
+  background-image: url("/stylesheets/img/starfield.png");
+  color: #BFFF00;
 }
 
 h2 {
@@ -71,6 +72,15 @@ select:-webkit-autofill:focus {
 .brand {
   position: absolute;
   left: 50%;
-  margin-left: -50px !important;  /* 50% of your logo width */
+  margin-left: -140px !important;  /* 50% of your logo width */
+  display: block;
+}
+
+#gameCanvas {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
   display: block;
 }

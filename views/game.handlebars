@@ -1,5 +1,6 @@
 {{!-- Table of high scores --}}
-<h1>High Scores</h1>
+<div class="col-md-2">
+  <h2>High Scores</h2>
 <ul>
     {{#each Score}}
     <li>{{this.score}} {{this.User.firstName}}</li>
@@ -7,28 +8,21 @@
 </ul>
 
 {{!-- start game button --}}
-<button>Start the Game!</button>
-{{!-- <button id="easy">Easy</button>
-<button id="normal">Normal</button>
-<button id="hard">Hard</button> --}}
-<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-  <input type="radio" class="btn-check" name="btnradio" id="easy" autocomplete="off" checked>
-  <label class="btn btn-outline-primary" for="btnradio1">Easy</label>
+  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" name="btnradio" id="easy" autocomplete="off" checked>
+    <label class="btn btn-outline-primary" for="btnradio1">Easy</label>
 
-  <input type="radio" class="btn-check" name="btnradio" id="normal" autocomplete="off">
-  <label class="btn btn-outline-primary" for="btnradio2">Normal</label>
+    <input type="radio" class="btn-check" name="btnradio" id="normal" autocomplete="off">
+    <label class="btn btn-outline-primary" for="btnradio2">Normal</label>
 
-  <input type="radio" class="btn-check" name="btnradio" id="hard" autocomplete="off">
-  <label class="btn btn-outline-primary" for="btnradio3">Hard</label>
+    <input type="radio" class="btn-check" name="btnradio" id="hard" autocomplete="off">
+    <label class="btn btn-outline-primary" for="btnradio3">Hard</label>
+  </div>
 </div>
 
-
-{{!-- log out button --}}
-<button>Log Out</button>
-
-
+<div class="col-md-4">
   <canvas id="gameCanvas"></canvas>
-  
+</div>
 
   <script src="js/spaceinvaders.js"></script>
     {{!-- images used for ships and aliens --}}
@@ -37,13 +31,11 @@
   <script>
     //  Setup the canvas.
     var canvas = document.getElementById("gameCanvas");
-    canvas.width = 800;
-    canvas.height = 600;
+    canvas.width = 500;
+    canvas.height = 400;
     
     //  Create the game.
     var game = new Game();
-    
-    
 
     //  Initialise it with the game canvas.
     game.initialise(canvas);
