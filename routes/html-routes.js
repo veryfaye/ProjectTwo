@@ -10,7 +10,7 @@ module.exports = function(app) {
   app.get("/", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
-      res.redirect("/members");
+      res.redirect("/game");
     }
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
@@ -18,34 +18,39 @@ module.exports = function(app) {
   app.get("/login", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
-      res.redirect("/members");
+      res.redirect("/game");
     }
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/members", isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/members.html"));
+  app.get("/verifyemail", (req, res) => {
+    // If the user already has an account send them to the members page
+    if (req.user) {
+      res.redirect("/game");
+    }
+    res.sendFile(path.join(__dirname, "../public/verifyemail.html"));
   });
 
-  app.get("/game", (req, res) => {
+  app.get("/resetpass/:resetPasswordToken", (req, res) => {
+    db.User.findOne({
+      where: { resetPasswordToken: req.params.resetPasswordToken }
+    }).then(dbUser => {
+      res.render("resetpassword", {
+        User: dbUser.dataValues
+      });
+    });
+  });
+
+  // Here we've add our isAuthenticated middleware to this route.
+  // If a user who is not logged in tries to access this route they will be redirected to the signup page
+
+  app.get("/game", isAuthenticated, (req, res) => {
     db.Score.findAll({
       limit: 10,
       order: [["score", "DESC"]],
       include: [db.User]
     }).then(dbScore => {
       res.render("game", { Score: dbScore.map(score => score.toJSON()) });
-    });
-  });
-
-  app.get("/endGame", (req, res) => {
-    db.Score.findAll({
-      limit: 10,
-      order: [["score", "DESC"]],
-      include: [db.User]
-    }).then(dbScore => {
-      res.render("endGame", { Score: dbScore.map(score => score.toJSON()) });
     });
   });
 };

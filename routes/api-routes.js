@@ -1,6 +1,17 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
+//nodemailer items
+require("dotenv").config();
+const nodemailer = require("nodemailer");
+//nodemailer step1
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_EMAIL,
+    pass: process.env.EMAIL_PASS
+  }
+});
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -26,13 +37,90 @@ module.exports = function(app) {
     })
       .then(() => {
         res.redirect(307, "/api/login");
+        //step2
+        const mailOptions = {
+          from: "space.invaders404@gmail.com",
+          to: req.body.email,
+          subject: "Welcome to Space Invaders",
+          text: "You are now signed up with Space Invaders! Have fun!"
+        };
+
+        //step 3
+        transporter.sendMail(mailOptions, err => {
+          if (err) {
+            console.log("Error has occured");
+          } else {
+            console.log("Email Sent");
+          }
+        });
       })
       .catch(err => {
         res.status(401).json(err);
       });
   });
 
-  // Route for logging user out
+  // Route for sending the reset password email user out
+  app.post("/api/sendResetEmail", (req, res) => {
+    console.log(req.body);
+    db.User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then(user => {
+      if (user === null) {
+        console.error("email not in database");
+        res.status(403).send("Email not in db");
+      } else {
+        const token = require("crypto")
+          .randomBytes(20)
+          .toString("hex");
+        user.update({
+          resetPasswordToken: token,
+          resetPasswordExpires: Date.now() + 360000
+        });
+        //step2
+        const mailOptions = {
+          from: "space.invaders404@gmail.com",
+          to: `${user.email}`,
+          subject: "Reset Your Space Invaders Password",
+          text:
+            "Click here to reset your space invaders password\n\n" +
+            `http://localhost:8080/resetpass/${token}`
+        };
+
+        //step 3
+        transporter.sendMail(mailOptions, err => {
+          if (err) {
+            console.log("Error has occured");
+          } else {
+            console.log("Email Sent");
+          }
+        });
+      }
+    });
+  });
+
+  // Route for resetting the users password
+  app.post("/api/passreset", (req, res) => {
+    console.log(req.body);
+    db.User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then(user => {
+      if (user === null) {
+        console.error("email not in database");
+        res.status(403).send("Email not in db");
+      } else {
+        user.update({
+          password: req.body.password
+        });
+        res.redirect("/login");
+      }
+    });
+  });
+
+  // Route for logging out the user
   app.get("/logout", (req, res) => {
     req.logout();
     res.redirect("/");
@@ -48,7 +136,10 @@ module.exports = function(app) {
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
-        id: req.user.id
+        id: req.user.id,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        highScore: req.user.highScore
       });
     }
   });
