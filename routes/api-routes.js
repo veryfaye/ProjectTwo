@@ -4,6 +4,14 @@ const passport = require("../config/passport");
 //nodemailer items
 require("dotenv").config();
 const nodemailer = require("nodemailer");
+//nodemailer step1
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_EMAIL,
+    pass: process.env.EMAIL_PASS
+  }
+});
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -29,14 +37,6 @@ module.exports = function(app) {
     })
       .then(() => {
         res.redirect(307, "/api/login");
-        //nodemailer step1
-        const transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: process.env.EMAIL_EMAIL,
-            pass: process.env.EMAIL_PASS
-          }
-        });
         //step2
         const mailOptions = {
           from: "space.invaders404@gmail.com",
@@ -59,7 +59,48 @@ module.exports = function(app) {
       });
   });
 
-  // Route for logging user out
+  // Route for sending the reset password email user out
+  app.post("/api/sendResetEmail", (req, res) => {
+    console.log(req.body);
+    db.User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then(user => {
+      if (user === null) {
+        console.error("email not in database");
+        res.status(403).send("Email not in db");
+      } else {
+        const token = require("crypto")
+          .randomBytes(20)
+          .toString("hex");
+        user.update({
+          resetPasswordToken: token,
+          resetPasswordExpires: Date.now() + 360000
+        });
+        //step2
+        const mailOptions = {
+          from: "space.invaders404@gmail.com",
+          to: `${user.email}`,
+          subject: "Reset Your Space Invaders Password",
+          text:
+            "Click here to reset your space invaders password\n\n" +
+            `http://localhost:8080/resetpass/${token}`
+        };
+
+        //step 3
+        transporter.sendMail(mailOptions, err => {
+          if (err) {
+            console.log("Error has occured");
+          } else {
+            console.log("Email Sent");
+          }
+        });
+      }
+    });
+  });
+
+  // Route for resetting the users password
   app.get("/logout", (req, res) => {
     req.logout();
     res.redirect("/");

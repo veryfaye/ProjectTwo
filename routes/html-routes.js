@@ -23,23 +23,18 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
+  app.get("/SendReset", (req, res) => {
+    // If the user already has an account send them to the members page
+    if (req.user) {
+      res.redirect("/game");
+    }
+    res.sendFile(path.join(__dirname, "../public/SendReset.html"));
+  });
+
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/members", isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/members.html"));
-  });
 
   app.get("/game", isAuthenticated, (req, res) => {
-    db.Score.findAll({
-      limit: 10,
-      order: [["score", "DESC"]],
-      include: [db.User]
-    }).then(dbScore => {
-      res.render("game", { Score: dbScore.map(score => score.toJSON()) });
-    });
-  });
-
-  app.get("/game", (req, res) => {
     db.Score.findAll({
       limit: 10,
       order: [["score", "DESC"]],
