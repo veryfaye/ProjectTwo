@@ -103,6 +103,21 @@ module.exports = function(app) {
   // Route for resetting the users password
   app.post("/api/passreset", (req, res) => {
     console.log(req.body);
+    db.User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then(user => {
+      if (user === null) {
+        console.error("email not in database");
+        res.status(403).send("Email not in db");
+      } else {
+        user.update({
+          password: req.body.password
+        });
+        res.redirect("/login");
+      }
+    });
   });
 
   // Route for logging out the user

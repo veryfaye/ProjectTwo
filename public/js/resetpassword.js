@@ -27,13 +27,16 @@ $(document).ready(() => {
 
   // loginUser does a post to our "api/login" route and if successful, redirects us the the members page
   function resetPassword(password, email) {
-    $.post("/api/passreset", { email: email, password: password });
-    //   .then(() => {
-    //     window.location.replace("/login");
-    //     // If there's an error, log the error
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    $.post("/api/passreset", {
+      email: email,
+      password: password
+    })
+      .then(() => {
+        window.location.replace("/login");
+        // If there's an error, log the error
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 });

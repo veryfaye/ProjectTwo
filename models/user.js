@@ -36,6 +36,16 @@ module.exports = function(sequelize, DataTypes) {
       null
     );
   });
+  // In this case before a User is updated, we will automatically hash the password
+  User.addHook("beforeUpdate", user => {
+    if (user.password) {
+      user.password = bcrypt.hashSync(
+        user.password,
+        bcrypt.genSaltSync(10),
+        null
+      );
+    }
+  });
   User.associate = function(models) {
     User.hasMany(models.Score, {
       onDelete: "cascade"
