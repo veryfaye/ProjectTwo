@@ -23,12 +23,22 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
-  app.get("/SendReset", (req, res) => {
+  app.get("/verifyemail", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
       res.redirect("/game");
     }
-    res.sendFile(path.join(__dirname, "../public/SendReset.html"));
+    res.sendFile(path.join(__dirname, "../public/verifyemail.html"));
+  });
+
+  app.get("/resetpass/:resetPasswordToken", (req, res) => {
+    db.User.findOne({
+      where: { resetPasswordToken: req.params.resetPasswordToken }
+    }).then(dbUser => {
+      res.render("resetpassword", {
+        User: dbUser.dataValues
+      });
+    });
   });
 
   // Here we've add our isAuthenticated middleware to this route.

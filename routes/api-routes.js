@@ -101,6 +101,11 @@ module.exports = function(app) {
   });
 
   // Route for resetting the users password
+  app.post("/api/passreset", (req, res) => {
+    console.log(req.body);
+  });
+
+  // Route for logging out the user
   app.get("/logout", (req, res) => {
     req.logout();
     res.redirect("/");
