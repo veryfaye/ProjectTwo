@@ -590,8 +590,17 @@ PlayState.prototype.draw = function(game, dt, ctx) {
   ctx.clearRect(0, 0, game.width, game.height);
 
   //  Draw ship.
-  ctx.fillStyle = "#999999";
-  ctx.fillRect(
+  // ctx.fillStyle = "#999999";
+  // ctx.fillRect(
+  //   this.ship.x - this.ship.width / 2,
+  //   this.ship.y - this.ship.height / 2,
+  //   this.ship.width,
+  //   this.ship.height
+  // );
+
+  var img = document.getElementById("ship");
+  ctx.drawImage(
+    img,
     this.ship.x - this.ship.width / 2,
     this.ship.y - this.ship.height / 2,
     this.ship.width,
@@ -599,10 +608,11 @@ PlayState.prototype.draw = function(game, dt, ctx) {
   );
 
   //  Draw invaders.
-  ctx.fillStyle = "#006600";
+  var img2 = document.getElementById("alien");
   for (var i = 0; i < this.invaders.length; i++) {
-    const invader = this.invaders[i];
-    ctx.fillRect(
+    var invader = this.invaders[i];
+    ctx.drawImage(
+      img2,
       invader.x - invader.width / 2,
       invader.y - invader.height / 2,
       invader.width,
