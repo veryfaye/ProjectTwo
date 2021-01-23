@@ -2,38 +2,3 @@ form.signup,
 form.login {
   margin-top: 50px;
 }
-
-body {
-  background-color: #000000;
-  background-image: url("../assets/spaceMonsters.png");
-  color: #bfff00;
-}
-
-h2 {
-  color: #bfff00
-}
-
-.navbar {
-  background-color: #bfff00;
-  color: #000000;
-}
-
-.btn {
-  background-color: #bfff00;
-  color: #000000;
-}
-
-input[type="text"], textarea {
-  background-color: #bfff00;
-  color: #000000;
-}
-
-input[type="email"], textarea {
-  background-color: #bfff00;
-  color: #000000;
-}
-
-input[type="password"], textarea {
-  background-color: #bfff00;
-  color: #000000;
-}
