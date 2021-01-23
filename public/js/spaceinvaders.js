@@ -78,6 +78,38 @@ function Game() {
   this.previousX = 0;
 }
 
+//game intensity event listeners
+document.getElementById("easy").addEventListener("click", easyIntensity);
+document.getElementById("normal").addEventListener("click", normalIntensity);
+document.getElementById("hard").addEventListener("click", hardIntensity);
+
+////game intensity functions
+
+function easyIntensity() {
+  game.config.invaderDropDistance = 10;
+  game.config.bombRate = 0.02;
+  game.config.pointsPerInvader = 2;
+  game.config.invaderInitialVelocity = 15;
+  console.log(game.config.bombRate);
+  console.log(game.config.invaderDropDistance);
+}
+
+function normalIntensity() {
+  game.config.bombRate = 0.15;
+  game.config.invaderDropDistance = 20;
+  game.config.pointsPerInvader = 10;
+  game.config.invaderInitialVelocity = 25;
+  console.log(game.config.bombRate);
+  console.log(game.config.invaderDropDistance);
+}
+function hardIntensity() {
+  game.config.bombRate = 0.4;
+  game.config.invaderDropDistance = 30;
+  game.config.pointsPerInvader = 20;
+  game.config.invaderInitialVelocity = 50;
+  console.log(game.config.bombRate);
+  console.log(game.config.invaderDropDistance);
+}
 //  Initialis the Game with a canvas.
 Game.prototype.initialise = function(gameCanvas) {
   //  Set the game canvas.
