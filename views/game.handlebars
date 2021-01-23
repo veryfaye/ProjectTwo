@@ -17,8 +17,12 @@
 
 
   <canvas id="gameCanvas"></canvas>
-  <script src="js/spaceinvaders.js"></script>
+  
 
+  <script src="js/spaceinvaders.js"></script>
+    {{!-- images used for ships and aliens --}}
+    <img src="ship.png" id="ship" width="1px" height="1px" style="display: none;"/>
+     <img src="alien.png" id="alien" style="display: none;">
   <script>
     //  Setup the canvas.
     var canvas = document.getElementById("gameCanvas");
@@ -28,6 +32,8 @@
     //  Create the game.
     var game = new Game();
     
+    
+
     //  Initialise it with the game canvas.
     game.initialise(canvas);
     
@@ -52,4 +58,7 @@
           delete pressedKeys[keycode];
         game.keyUp(keycode);
     });
+    
+    //hides images in HTML
+    
     </script>
