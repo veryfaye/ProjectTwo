@@ -7,7 +7,7 @@ const db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app) {
-  app.get("/", (req, res) => {
+  app.get("/signup", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
       res.redirect("/game");
@@ -15,7 +15,7 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
 
-  app.get("/login", (req, res) => {
+  app.get("/", (req, res) => {
     // If the user already has an account send them to the members page
     if (req.user) {
       res.redirect("/game");
@@ -35,9 +35,13 @@ module.exports = function(app) {
     db.User.findOne({
       where: { resetPasswordToken: req.params.resetPasswordToken }
     }).then(dbUser => {
-      res.render("resetpassword", {
-        User: dbUser.dataValues
-      });
+      if (!dbUser) {
+        res.sendFile(path.join(__dirname, "../public/error.html"));
+      } else {
+        res.render("resetpassword", {
+          User: dbUser.dataValues
+        });
+      }
     });
   });
 

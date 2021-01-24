@@ -85,7 +85,7 @@ module.exports = function(app) {
           subject: "Reset Your Space Invaders Password",
           text:
             "Click here to reset your space invaders password\n\n" +
-            `http://localhost:8080/resetpass/${token}`
+            `https://project-two-pat-glenn-amanda.herokuapp.com/resetpass/${token}`
         };
 
         //step 3
@@ -115,7 +115,7 @@ module.exports = function(app) {
         user.update({
           password: req.body.password
         });
-        res.redirect("/login");
+        res.redirect("/");
       }
     });
   });
