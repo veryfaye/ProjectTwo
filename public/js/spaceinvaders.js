@@ -81,7 +81,6 @@ function Game() {
 
 $.get("/api/user_data").then(data => {
   userData = data;
-  console.log(userData);
   $("#user-name").text(data.firstName);
   if (data.highScore === null) {
     data.highScore = 0;
@@ -619,8 +618,6 @@ PlayState.prototype.update = function(game, dt) {
   //  Check for failure
   if (game.lives <= 0) {
     game.moveToState(new GameOverState());
-    console.log("game over " + game.score);
-    console.log(userData);
     $.post("/api/newscore", { score: game.score, UserId: userData.id });
     if (game.score > userData.highScore) {
       $.post("/api/highscore", {
