@@ -3,7 +3,7 @@
   <h3>Welcome, <span id="user-name"></span>{{!-- 's High score: <span id="user-high-score"></span> --}}</h3>
 </div>
 
-<div class="col-md-2">
+<div class="col-md-4">
   <h2>High Scores</h2>
 <ul>
     {{#each Score}}
@@ -11,7 +11,18 @@
     {{/each}}
 </ul>
 
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
+<div class="radio-toolbar">
+    <input type="radio" id="easy" name="options" autocomplete="off" checked>
+    <label for="easy">Easy</label>
+
+    <input type="radio" id="normal" name="options" autocomplete="off">
+    <label for="normal">Normal</label>
+
+    <input type="radio" id="hard" name="options" autocomplete="off">
+    <label for="hard">Hard</label> 
+</div>
+
+<!-- <div class="btn-group btn-group-toggle" data-toggle="buttons">
   <label class="btn btn-secondary btn-sm active">
     <input type="radio" name="options" id="easy" autocomplete="off" checked> Easy
   </label>
@@ -21,7 +32,7 @@
   <label class="btn btn-secondary btn-sm">
     <input type="radio" name="options" id="hard" autocomplete="off"> Hard
   </label>
-</div>
+</div> -->
 
 </div>
 
@@ -38,7 +49,7 @@
     //  Setup the canvas.
     var canvas = document.getElementById("gameCanvas");
     canvas.width = 500;
-    canvas.height = 400;
+    canvas.height = 350;
     
     //  Create the game.
     var game = new Game();
