@@ -32,4 +32,4 @@ Second Project for Coding Bootcamp
     [Pat Moriarty](https://github.com/pmo48/)
     [Tim Hoyt](https://github.com/Timhoyt824/)
   ## ScreenShot
-  ![README](ScreenShot.png)
+  ![README](ScreenShot2.png)
