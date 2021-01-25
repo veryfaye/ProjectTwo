@@ -28,7 +28,7 @@ Second Project for Coding Bootcamp
   ## Contributing
     [Amanda LeMoine](https://github.com/veryfaye/)
     [Dennis Herris](https://github.com/maninblack1974/)
-    [Glen Gutierrez](https://github.com/g-gutierrez/)
+    [Glenn Gutierrez](https://github.com/g-gutierrez/)
     [Pat Moriarty](https://github.com/pmo48/)
     [Tim Hoyt](https://github.com/Timhoyt824/)
   ## ScreenShot
