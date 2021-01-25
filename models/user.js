@@ -37,8 +37,9 @@ module.exports = function(sequelize, DataTypes) {
     );
   });
   // In this case before a User is updated, we will automatically hash the password
-  User.addHook("beforeUpdate", user => {
-    if (user.password) {
+  User.addHook("beforeUpdate", (user, options) => {
+    if (options.fields[0] === "password") {
+      console.log("re-encrypt the password");
       user.password = bcrypt.hashSync(
         user.password,
         bcrypt.genSaltSync(10),
