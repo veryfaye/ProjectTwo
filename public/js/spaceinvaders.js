@@ -30,6 +30,7 @@
 const KEY_LEFT = 37;
 const KEY_RIGHT = 39;
 const KEY_SPACE = 32;
+let userData;
 
 //  Creates an instance of the Game class.
 function Game() {
@@ -77,6 +78,16 @@ function Game() {
   //  The previous x position, used for touch.
   this.previousX = 0;
 }
+
+$.get("/api/user_data").then(data => {
+  userData = data;
+  console.log(userData);
+  $("#user-name").text(data.firstName);
+  // if (data.highScore === null) {
+  //   data.highScore = 0;
+  // }
+  // $("#user-high-score").text(data.highScore);
+});
 
 //game intensity event listeners
 document.getElementById("easy").addEventListener("click", easyIntensity);
@@ -327,7 +338,11 @@ GameOverState.prototype.draw = function(game, dt, ctx) {
   ctx.fillText("Game Over!", game.width / 2, game.height / 2 - 40);
   ctx.font = "16px Arial";
   ctx.fillText(
-    "You scored " + game.score + " and got to level " + game.level,
+    "You scored " +
+      game.score +
+      " and got to level " +
+      game.level +
+      ". Refresh the page to see the updated high score table.",
     game.width / 2,
     game.height / 2
   );
@@ -607,6 +622,18 @@ PlayState.prototype.update = function(game, dt) {
   //  Check for failure
   if (game.lives <= 0) {
     game.moveToState(new GameOverState());
+    console.log("game over " + game.score);
+    console.log(userData);
+    $.post("/api/newscore", { score: game.score, UserId: userData.id });
+    // Logic to update the users personal high score. Commented out because it causes issues with passport login authentication
+    // if (game.score > userData.highScore) {
+    //   $.post("/api/highscore", {
+    //     id: userData.id,
+    //     highScore: game.score
+    //   });
+    //   userData.highScore = game.score;
+    //   $("#user-high-score").text(game.score);
+    // }
   }
 
   //  Check for victory

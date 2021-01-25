@@ -85,7 +85,7 @@ module.exports = function(app) {
           subject: "Reset Your Space Invaders Password",
           text:
             "Click here to reset your space invaders password\n\n" +
-            `http://localhost:8080/resetpass/${token}`
+            `https://project-two-pat-glenn-amanda.herokuapp.com/resetpass/${token}`
         };
 
         //step 3
@@ -115,7 +115,7 @@ module.exports = function(app) {
         user.update({
           password: req.body.password
         });
-        res.redirect("/login");
+        res.redirect("/");
       }
     });
   });
@@ -151,7 +151,7 @@ module.exports = function(app) {
       UserId: req.body.UserId
     })
       .then(() => {
-        res.redirect(307, "/api/login");
+        res.redirect("/game");
       })
       .catch(err => {
         res.status(401).json(err);
@@ -159,14 +159,29 @@ module.exports = function(app) {
   });
 
   //Route for updating the highScore using the users login
-  app.put("/api/highscore", (req, res) => {
+  app.post("/api/highscore", (req, res) => {
+    // console.log(req.body);
+    // console.log(req.body);
+    // db.User.update(
+    //   { highScore: req.body.highScore },
+    //   { where: { id: req.body.id } }
+    // ).then(dbUser => {
+    //   res.json(dbUser);
+    // });
     console.log(req.body);
-    console.log(req.body);
-    db.User.update(
-      { highScore: req.body.highScore },
-      { where: { id: req.body.id } }
-    ).then(dbUser => {
-      res.json(dbUser);
+    db.User.findOne({
+      where: {
+        id: req.body.id
+      }
+    }).then(user => {
+      if (user === null) {
+        console.error("user not in database");
+        res.status(403).send("user not in db");
+      } else {
+        user.update({
+          highScore: req.body.highScore
+        });
+      }
     });
   });
 };
