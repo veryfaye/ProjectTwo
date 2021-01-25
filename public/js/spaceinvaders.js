@@ -299,12 +299,12 @@ WelcomeState.prototype.draw = function(game, dt, ctx) {
   //  Clear the background.
   ctx.clearRect(0, 0, game.width, game.height);
 
-  ctx.font = "30px Arial";
-  ctx.fillStyle = "#ffffff";
+  ctx.font = "30px courier";
+  ctx.fillStyle = "#BFFF00";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText("Space Invaders", game.width / 2, game.height / 2 - 40);
-  ctx.font = "16px Arial";
+  ctx.font = "16px courier";
 
   ctx.fillText(
     "Press 'Space' or touch to start.",
@@ -331,22 +331,18 @@ GameOverState.prototype.draw = function(game, dt, ctx) {
   //  Clear the background.
   ctx.clearRect(0, 0, game.width, game.height);
 
-  ctx.font = "30px Arial";
-  ctx.fillStyle = "#ffffff";
+  ctx.font = "30px courier";
+  ctx.fillStyle = "#BFFF00";
   ctx.textBaseline = "center";
   ctx.textAlign = "center";
   ctx.fillText("Game Over!", game.width / 2, game.height / 2 - 40);
-  ctx.font = "16px Arial";
+  ctx.font = "16px courier";
   ctx.fillText(
-    "You scored " +
-      game.score +
-      " and got to level " +
-      game.level +
-      ". Refresh the page to see the updated high score table.",
+    "Score " + game.score + " Highest Level:" + game.level,
     game.width / 2,
     game.height / 2
   );
-  ctx.font = "16px Arial";
+  ctx.font = "16px Courier";
   ctx.fillText(
     "Press 'Space' to play again.",
     game.width / 2,
@@ -360,6 +356,7 @@ GameOverState.prototype.keyDown = function(game, keyCode) {
     game.lives = 3;
     game.score = 0;
     game.level = 1;
+    location.reload();
     game.moveToState(new LevelIntroState(1));
   }
 };
@@ -698,8 +695,8 @@ PlayState.prototype.draw = function(game, dt, ctx) {
     game.gameBounds.bottom +
     (game.height - game.gameBounds.bottom) / 2 +
     14 / 2;
-  ctx.font = "14px Arial";
-  ctx.fillStyle = "#ffffff";
+  ctx.font = "14px Courier";
+  ctx.fillStyle = "#BFFF00";
   let info = "Lives: " + game.lives;
   ctx.textAlign = "left";
   ctx.fillText(info, game.gameBounds.left, textYpos);
@@ -764,8 +761,8 @@ PauseState.prototype.draw = function(game, dt, ctx) {
   //  Clear the background.
   ctx.clearRect(0, 0, game.width, game.height);
 
-  ctx.font = "14px Arial";
-  ctx.fillStyle = "#ffffff";
+  ctx.font = "14px courier";
+  ctx.fillStyle = "#BFFF00";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText("Paused", game.width / 2, game.height / 2);
@@ -806,12 +803,12 @@ LevelIntroState.prototype.draw = function(game, dt, ctx) {
   //  Clear the background.
   ctx.clearRect(0, 0, game.width, game.height);
 
-  ctx.font = "36px Arial";
-  ctx.fillStyle = "#ffffff";
+  ctx.font = "36px Courier";
+  ctx.fillStyle = "#BFFF00";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText("Level " + this.level, game.width / 2, game.height / 2);
-  ctx.font = "24px Arial";
+  ctx.font = "24px Courier";
   ctx.fillText(
     "Ready in " + this.countdownMessage,
     game.width / 2,
