@@ -1,4 +1,8 @@
 {{!-- Table of high scores --}}
+<div>
+  <h3>Welcome, <span id="user-name"></span>{{!-- 's High score: <span id="user-high-score"></span> --}}</h3>
+</div>
+
 <div class="col-md-2">
   <h2>High Scores</h2>
 <ul>
@@ -7,21 +11,18 @@
     {{/each}}
 </ul>
 
-{{!-- start game button --}}
-  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-    <input type="radio" class="btn-check" name="btnradio" id="easy" autocomplete="off" checked>
-    <label class="btn btn-outline-primary" for="btnradio1">Easy</label>
-
-    <input type="radio" class="btn-check" name="btnradio" id="normal" autocomplete="off">
-    <label class="btn btn-outline-primary" for="btnradio2">Normal</label>
-
-    <input type="radio" class="btn-check" name="btnradio" id="hard" autocomplete="off">
-    <label class="btn btn-outline-primary" for="btnradio3">Hard</label>
-  </div>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-secondary btn-sm active">
+    <input type="radio" name="options" id="easy" autocomplete="off" checked> Easy
+  </label>
+  <label class="btn btn-secondary btn-sm">
+    <input type="radio" name="options" id="normal" autocomplete="off"> Normal
+  </label>
+  <label class="btn btn-secondary btn-sm">
+    <input type="radio" name="options" id="hard" autocomplete="off"> Hard
+  </label>
 </div>
 
-<div>
-  <h3>Welcome <span id="user-name"></span>{{!-- 's High score: <span id="user-high-score"></span> --}}</h3>
 </div>
 
 <div class="col-md-4">

@@ -11,6 +11,26 @@ body {
   color: #BFFF00;
 }
 
+.btn-secondary {
+  background-color: #000000;
+  color: #bfff00;
+}
+.btn-secondary:hover {
+  background-color: #bfff00;
+  color: #000000;
+}
+.btn-secondary:focus {
+  background-color: #bfff00;
+  color: #000000;
+}
+.btn-secondary:checked {
+  background-color: #bfff00;
+  color: #000000;
+}
+.btn-sm {
+  padding: 4px 8px 2px;
+}
+
 h2, h3 {
   color: #bfff00
 }
