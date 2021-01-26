@@ -92,6 +92,8 @@ $.get("/api/user_data").then(data => {
 document.getElementById("easy").addEventListener("click", easyIntensity);
 document.getElementById("normal").addEventListener("click", normalIntensity);
 document.getElementById("hard").addEventListener("click", hardIntensity);
+document.getElementById("mute").addEventListener("click", toggleMute);
+document.getElementById("unmute").addEventListener("click", toggleMute2);
 
 ////game intensity functions
 
@@ -100,8 +102,6 @@ function easyIntensity() {
   game.config.bombRate = 0.02;
   game.config.pointsPerInvader = 2;
   game.config.invaderInitialVelocity = 15;
-  console.log(game.config.bombRate);
-  console.log(game.config.invaderDropDistance);
 }
 
 function normalIntensity() {
@@ -109,16 +109,22 @@ function normalIntensity() {
   game.config.invaderDropDistance = 20;
   game.config.pointsPerInvader = 10;
   game.config.invaderInitialVelocity = 25;
-  console.log(game.config.bombRate);
-  console.log(game.config.invaderDropDistance);
 }
 function hardIntensity() {
   game.config.bombRate = 0.4;
   game.config.invaderDropDistance = 30;
   game.config.pointsPerInvader = 20;
   game.config.invaderInitialVelocity = 50;
-  console.log(game.config.bombRate);
-  console.log(game.config.invaderDropDistance);
+}
+
+//mute on
+function toggleMute(mute) {
+  game.mute(mute);
+}
+
+//unmute
+function toggleMute2(unmute) {
+  game.mute(unmute);
 }
 //  Initialis the Game with a canvas.
 Game.prototype.initialise = function(gameCanvas) {
@@ -298,18 +304,25 @@ WelcomeState.prototype.draw = function(game, dt, ctx) {
   //  Clear the background.
   ctx.clearRect(0, 0, game.width, game.height);
 
-  ctx.font = "30px courier";
-  ctx.fillStyle = "#BFFF00";
-  ctx.textBaseline = "middle";
-  ctx.textAlign = "center";
-  ctx.fillText("Space Invaders", game.width / 2, game.height / 2 - 40);
-  ctx.font = "16px courier";
+  //image used for intro
 
-  ctx.fillText(
-    "Press 'Space' or touch to start.",
-    game.width / 2,
-    game.height / 2
-  );
+  var img3 = document.getElementById("intro");
+  ctx.drawImage(img3, 1, 1, 500, 300);
+
+  //original text for welcomestate
+
+  // ctx.font = "30px courier";
+  // ctx.fillStyle = "#BFFF00";
+  // ctx.textBaseline = "middle";
+  // ctx.textAlign = "center";
+  // ctx.fillText("Space Invaders", game.width / 2, game.height / 2 - 40);
+  // ctx.font = "16px courier";
+
+  // ctx.fillText(
+  //   "Press 'Space' or touch to start.",
+  //   game.width / 2,
+  //   game.height / 2
+  // );
 };
 
 WelcomeState.prototype.keyDown = function(game, keyCode) {
@@ -330,23 +343,35 @@ GameOverState.prototype.draw = function(game, dt, ctx) {
   //  Clear the background.
   ctx.clearRect(0, 0, game.width, game.height);
 
-  ctx.font = "30px courier";
-  ctx.fillStyle = "#BFFF00";
-  ctx.textBaseline = "center";
+  var img4 = document.getElementById("gameover");
   ctx.textAlign = "center";
-  ctx.fillText("Game Over!", game.width / 2, game.height / 2 - 40);
-  ctx.font = "16px courier";
-  ctx.fillText(
-    "Score " + game.score + " Highest Level:" + game.level,
-    game.width / 2,
-    game.height / 2
-  );
+  ctx.drawImage(img4, 1, 1, 500, 300);
   ctx.font = "16px Courier";
+  ctx.fillStyle = "#DB55DD";
+  ctx.textAlign = "center";
   ctx.fillText(
-    "Press 'Space' to play again.",
+    "Score: " + game.score + "     Highest Level: " + game.level,
     game.width / 2,
-    game.height / 2 + 40
+    game.height / 2 - 140
   );
+
+  // ctx.font = "30px courier";
+  // ctx.fillStyle = "#BFFF00";
+  // ctx.textBaseline = "center";
+  // ctx.textAlign = "center";
+  // ctx.fillText("Game Over!", game.width / 2, game.height / 2 - 40);
+  // ctx.font = "16px courier";
+  // ctx.fillText(
+  //   "Score: " + game.score + " Highest Level:" + game.level,
+  //   game.width / 2,
+  //   game.height / 2
+  // );
+  // ctx.font = "16px Courier";
+  // ctx.fillText(
+  //   "Press 'Space' for Main Menu",
+  //   game.width / 2,
+  //   game.height / 2 + 40
+  // );
 };
 
 GameOverState.prototype.keyDown = function(game, keyCode) {
@@ -356,7 +381,7 @@ GameOverState.prototype.keyDown = function(game, keyCode) {
     game.score = 0;
     game.level = 1;
     location.reload();
-    game.moveToState(new LevelIntroState(1));
+    game.moveToState(new WelcomeState());
   }
 };
 
