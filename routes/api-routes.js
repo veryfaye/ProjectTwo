@@ -61,7 +61,6 @@ module.exports = function(app) {
 
   // Route for sending the reset password email user out
   app.post("/api/sendResetEmail", (req, res) => {
-    console.log(req.body);
     db.User.findOne({
       where: {
         email: req.body.email
@@ -102,7 +101,6 @@ module.exports = function(app) {
 
   // Route for resetting the users password
   app.post("/api/passreset", (req, res) => {
-    console.log(req.body);
     db.User.findOne({
       where: {
         email: req.body.email
@@ -134,18 +132,19 @@ module.exports = function(app) {
     } else {
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.email,
-        id: req.user.id,
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        highScore: req.user.highScore
+      db.User.findOne({ where: { id: req.user.id } }).then(user => {
+        res.json({
+          email: user.dataValues.email,
+          id: user.dataValues.id,
+          firstName: user.dataValues.firstName,
+          lastName: user.dataValues.lastName,
+          highScore: user.dataValues.highScore
+        });
       });
     }
   });
 
   app.post("/api/newscore", (req, res) => {
-    console.log(req.body);
     db.Score.create({
       score: req.body.score,
       UserId: req.body.UserId
@@ -160,15 +159,6 @@ module.exports = function(app) {
 
   //Route for updating the highScore using the users login
   app.post("/api/highscore", (req, res) => {
-    // console.log(req.body);
-    // console.log(req.body);
-    // db.User.update(
-    //   { highScore: req.body.highScore },
-    //   { where: { id: req.body.id } }
-    // ).then(dbUser => {
-    //   res.json(dbUser);
-    // });
-    console.log(req.body);
     db.User.findOne({
       where: {
         id: req.body.id

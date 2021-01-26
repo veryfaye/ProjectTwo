@@ -9,8 +9,6 @@ $(document).ready(() => {
     const userData = {
       email: emailInput.val().trim()
     };
-    console.log(userData);
-
     if (!userData.email) {
       return;
     }
