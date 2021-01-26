@@ -22,6 +22,14 @@
     <label for="hard">Hard</label> 
 </div>
 
+<h2>Sound</h2>
+<div class="radio-toolbar">
+    <input type="radio" id="mute" name="sound" autocomplete="off">
+    <label for="mute">Mute</label>
+
+    <input type="radio" id="unmute" name="sound" autocomplete="off" checked>
+    <label for="unmute">Unmute</label>
+</div>
 <!-- <div class="btn-group btn-group-toggle" data-toggle="buttons">
   <label class="btn btn-secondary btn-sm active">
     <input type="radio" name="options" id="easy" autocomplete="off" checked> Easy
@@ -45,6 +53,8 @@
     {{!-- images used for ships and aliens --}}
     <img src="stylesheets/img/ship.png" id="ship" width="1px" height="1px" style="display: none;"/>
      <img src="stylesheets/img/alien.png" id="alien" style="display: none;">
+     <img src="stylesheets/img/intro.png" id="intro" style="display: none;">
+     <img src="stylesheets/img/gameover.png" id="gameover" style="display: none;">
   <script>
     //  Setup the canvas.
     var canvas = document.getElementById("gameCanvas");
