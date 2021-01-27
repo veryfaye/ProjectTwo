@@ -6,7 +6,7 @@ Second Project for Coding Bootcamp
   The game framework was provided by [Dave Kerr](https://github.com/dwmkerr/spaceinvaders). We made graphical changes to the start and end game screens. We also changed the ship and alien images. 
 
   ## Gameplay
- ![Gameplay](Space Invaders.gif)
+ ![Gameplay](public/stylesheets/img/SpaceInvadersVid.gif)
 
  ## Heroku Deployment
  https://project-two-pat-glenn-amanda.herokuapp.com/
@@ -35,10 +35,10 @@ Second Project for Coding Bootcamp
   ## License
   MIT
   ## Contributing
-    @veryfaye
-    @maninblack1974
-    @g-gutierrez
-    @pmo48
-    @Timhoyt824
+    https://github.com/veryfaye
+    https://github.com/veryfaye(@maninblack1974)
+    https://github.com/g-gutierrez
+    https://github.com/pmo48
+    https://github.com/Timhoyt824
   ## ScreenShot
   ![README](public/stylesheets/img/ScreenShot2.png)
