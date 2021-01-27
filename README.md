@@ -35,10 +35,10 @@ Second Project for Coding Bootcamp
   ## License
   MIT
   ## Contributing
-    (@veryfaye)
-    (@maninblack1974)
-    (@g-gutierrez)
-    (@pmo48)
-    (@Timhoyt824)
+    https://github.com/veryfaye
+    https://github.com/veryfaye(@maninblack1974)
+    https://github.com/g-gutierrez
+    https://github.com/pmo48
+    https://github.com/Timhoyt824
   ## ScreenShot
   ![README](public/stylesheets/img/ScreenShot2.png)
